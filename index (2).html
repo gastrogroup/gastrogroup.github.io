@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gastro Group & Endocenter — Patient Resource Center</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--teal:#2BAAAD;--teal-dark:#1d8a8d;--teal-light:#e8f7f7;--teal-mid:#3dbcbf;--gray:#4a4a4a;--gray-light:#6b6b6b;--sand:#f8f8f6;--sand-dark:#ededea;--white:#ffffff;--amber:#c8872a;--amber-light:#fdf3e3;--red:#c0392b;--red-light:#fdf0ef;--border:rgba(43,170,173,0.18);--radius:10px;--radius-lg:16px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--gray);line-height:1.7;font-size:15px;}
+.disclaimer-banner{background:var(--amber-light);border-bottom:1px solid rgba(200,135,42,0.3);padding:10px 24px;text-align:center;font-size:13px;color:#7a5210;line-height:1.5;}
+.disclaimer-banner strong{font-weight:600;}
+header{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:72px;box-shadow:0 2px 12px rgba(43,170,173,0.08);}
+.logo-text-wrap{display:flex;flex-direction:column;line-height:1.2;}
+.logo-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--teal);letter-spacing:-0.3px;}
+.logo-sub{font-size:10px;color:var(--gray-light);letter-spacing:0.07em;text-transform:uppercase;}
+.logo-gi{font-size:10px;color:var(--gray-light);letter-spacing:0.04em;margin-top:1px;}
+nav{display:flex;gap:4px;}
+nav a{font-size:13px;color:var(--gray-light);text-decoration:none;padding:6px 14px;border-radius:20px;transition:background 0.15s,color 0.15s;}
+nav a:hover{background:var(--teal-light);color:var(--teal);}
+.hero{background:linear-gradient(135deg,var(--teal) 0%,#1a7e81 100%);color:white;padding:64px 32px 56px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(255,255,255,0.07) 0%,transparent 60%);pointer-events:none;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:5px 16px;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:18px;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(26px,4vw,44px);font-weight:400;line-height:1.2;margin-bottom:14px;letter-spacing:-0.5px;}
+.hero h1 em{font-style:italic;opacity:0.85;}
+.hero p{font-size:16px;opacity:0.82;max-width:520px;margin:0 auto 28px;}
+.search-wrap{max-width:540px;margin:0 auto;display:flex;gap:8px;}
+.search-wrap input{flex:1;padding:13px 18px;border:none;border-radius:var(--radius);font-size:14px;font-family:'DM Sans',sans-serif;background:rgba(255,255,255,0.95);color:var(--gray);outline:none;}
+.search-wrap input:focus{background:white;}
+.search-wrap input::placeholder{color:#aaa;}
+.search-wrap button{padding:13px 22px;background:var(--amber);border:none;border-radius:var(--radius);color:white;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.15s;white-space:nowrap;}
+.search-wrap button:hover{background:#b07520;}
+main{max-width:1120px;margin:0 auto;padding:48px 24px 80px;}
+.section-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:48px;}
+.topic-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 18px;cursor:pointer;transition:border-color 0.15s,transform 0.12s,box-shadow 0.15s;text-align:left;}
+.topic-card:hover{border-color:var(--teal-mid);transform:translateY(-2px);box-shadow:0 8px 24px rgba(43,170,173,0.12);}
+.topic-card.active{border-color:var(--teal);background:var(--teal-light);}
+.topic-icon{width:40px;height:40px;background:var(--teal-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:20px;}
+.topic-card.active .topic-icon{background:rgba(43,170,173,0.18);}
+.topic-title{font-size:14px;font-weight:600;color:var(--gray);margin-bottom:4px;}
+.topic-desc{font-size:12px;color:var(--gray-light);line-height:1.5;}
+.topic-badge{display:inline-block;margin-top:10px;font-size:10px;font-weight:600;letter-spacing:0.05em;padding:3px 8px;border-radius:20px;text-transform:uppercase;}
+.badge-teal{background:var(--teal-light);color:var(--teal-dark);}
+.badge-amber{background:var(--amber-light);color:var(--amber);}
+.content-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 40px;margin-bottom:48px;display:none;animation:slideIn 0.2s ease;}
+.content-panel.active{display:block;}
+@keyframes slideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.panel-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.panel-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--gray);}
+.panel-close{background:var(--sand);border:1px solid var(--border);border-radius:var(--radius);padding:6px 14px;font-size:13px;color:var(--gray-light);cursor:pointer;transition:background 0.15s;}
+.panel-close:hover{background:var(--sand-dark);color:var(--gray);}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;}
+.tab-btn{padding:8px 16px;font-size:13px;font-weight:500;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--gray-light);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
+.tab-btn:hover{border-color:var(--teal-mid);color:var(--teal);}
+.tab-btn.active{background:var(--teal);border-color:var(--teal);color:white;}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+.step-list{list-style:none;}
+.step-list li{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start;}
+.step-num{min-width:28px;height:28px;background:var(--teal);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;margin-top:2px;}
+.step-text{font-size:14px;line-height:1.7;color:var(--gray);padding-top:3px;}
+.step-text strong{font-weight:600;color:var(--teal-dark);}
+.alert{border-radius:var(--radius);padding:14px 16px;font-size:13px;line-height:1.6;margin:16px 0;border-left:3px solid;}
+.alert-warning{background:var(--amber-light);color:#7a5210;border-color:var(--amber);}
+.alert-danger{background:var(--red-light);color:var(--red);border-color:var(--red);}
+.alert-info{background:var(--teal-light);color:var(--teal-dark);border-color:var(--teal);}
+.alert strong{font-weight:600;}
+.faq-item{border-bottom:1px solid var(--border);padding:14px 0;cursor:pointer;}
+.faq-item:last-of-type{border-bottom:none;}
+.faq-q{font-size:14px;font-weight:600;color:var(--gray);display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.faq-arrow{width:22px;height:22px;flex-shrink:0;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gray-light);transition:transform 0.2s,background 0.15s;}
+.faq-item.open .faq-arrow{transform:rotate(45deg);background:var(--teal-light);color:var(--teal);border-color:var(--teal);}
+.faq-a{font-size:13.5px;color:var(--gray-light);line-height:1.7;max-height:0;overflow:hidden;transition:max-height 0.3s ease,margin-top 0.2s;}
+.faq-item.open .faq-a{max-height:500px;margin-top:10px;}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+@media(max-width:600px){.card-grid{grid-template-columns:1fr;}}
+.info-card{background:var(--sand);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
+.info-card h4{font-size:13px;font-weight:600;color:var(--teal-dark);margin-bottom:6px;}
+.info-card p{font-size:13px;color:var(--gray-light);line-height:1.6;}
+.panel-disclaimer{margin-top:24px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:#999;line-height:1.6;}
+footer{background:var(--gray);color:rgba(255,255,255,0.5);text-align:center;padding:36px 24px;font-size:12px;line-height:1.9;}
+footer strong{color:rgba(255,255,255,0.85);}
+@media(max-width:640px){header{padding:0 16px;}nav{display:none;}.hero{padding:40px 16px;}main{padding:32px 16px 60px;}.content-panel{padding:24px 18px;}.topic-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-banner">
+  <strong>Medical Disclaimer:</strong> This website provides general patient education only and does not constitute medical advice, diagnosis, or treatment. Always follow the specific instructions provided by your physician. Contact our office with any clinical questions.
+</div>
+
+<header>
+  <div class="logo-text-wrap">
+    <span class="logo-name">Gastro Group &amp; Endocenter</span>
+    <span class="logo-sub">Patient Resource Center</span>
+    <span class="logo-gi">Powered by GI Alliance</span>
+  </div>
+  <nav>
+    <a href="#topics">Topics</a>
+    <a href="#procedures">Procedures</a>
+    <a href="#footer">About</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">Patient Resource Center</div>
+  <h1>Your GI Questions,<br><em>Answered Before You Call</em></h1>
+  <p>Prep instructions, test protocols, pathology explanations, procedure guides, billing answers — all in one place.</p>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Try: colonoscopy prep, SIBO test, hemorrhoid banding…"/>
+    <button onclick="handleSearch()">Search</button>
+  </div>
+  <div id="search-result" style="display:none;margin-top:12px;font-size:13px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.15);border-radius:8px;padding:8px 14px;max-width:540px;margin-left:auto;margin-right:auto;"></div>
+</div>
+
+<main>
+  <div id="topics">
+    <div class="section-label">Patient education topics</div>
+    <div class="topic-grid">
+      <div class="topic-card" id="card-prep" onclick="openPanel('prep')"><div class="topic-icon">🧪</div><div class="topic-title">Bowel Prep Instructions</div><div class="topic-desc">Step-by-step colonoscopy prep guides</div><span class="topic-badge badge-teal">Most viewed</span></div>
+      <div class="topic-card" id="card-breath" onclick="openPanel('breath')"><div class="topic-icon">💨</div><div class="topic-title">Breath Testing</div><div class="topic-desc">FoodMarble AIRE — SIBO, lactose &amp; fructose</div><span class="topic-badge badge-teal">Step-by-step</span></div>
+      <div class="topic-card" id="card-pathology" onclick="openPanel('pathology')"><div class="topic-icon">🔬</div><div class="topic-title">Pathology Results</div><div class="topic-desc">What your biopsy report means</div><span class="topic-badge badge-teal">Explained</span></div>
+      <div class="topic-card" id="card-nextsteps" onclick="openPanel('nextsteps')"><div class="topic-icon">📋</div><div class="topic-title">After Your Procedure</div><div class="topic-desc">Recovery, next steps &amp; when to call</div><span class="topic-badge badge-teal">Recovery guide</span></div>
+      <div class="topic-card" id="card-billing" onclick="openPanel('billing')"><div class="topic-icon">💳</div><div class="topic-title">Billing &amp; Insurance</div><div class="topic-desc">Split bills, the polyp rule, payment plans</div><span class="topic-badge badge-amber">FAQ</span></div>
+      <div class="topic-card" id="card-conditions" onclick="openPanel('conditions')"><div class="topic-icon">📖</div><div class="topic-title">Condition Library</div><div class="topic-desc">IBS, GERD, IBD, Celiac, gastroparesis, cirrhosis &amp; more</div><span class="topic-badge badge-teal">Reference</span></div>
+      <div class="topic-card" id="card-cancer" onclick="openPanel('cancer')"><div class="topic-icon">🎗️</div><div class="topic-title">GI Cancers</div><div class="topic-desc">Colorectal, pancreatic, esophageal, gastric &amp; more</div><span class="topic-badge badge-amber">Reference</span></div>
+      <div class="topic-card" id="card-diet" onclick="openPanel('diet')"><div class="topic-icon">🥗</div><div class="topic-title">Diet &amp; Nutrition</div><div class="topic-desc">Low-FODMAP, low-residue, gluten-free</div><span class="topic-badge badge-teal">Guides</span></div>
+      <div class="topic-card" id="card-medications" onclick="openPanel('medications')"><div class="topic-icon">💊</div><div class="topic-title">Medications Guide</div><div class="topic-desc">What your GI prescriptions do</div><span class="topic-badge badge-teal">Reference</span></div>
+    </div>
+  </div>
+
+  <div id="procedures">
+    <div class="section-label">Procedure guides</div>
+    <div class="topic-grid">
+      <div class="topic-card" id="card-hemorrhoid" onclick="openPanel('hemorrhoid')"><div class="topic-icon">🩺</div><div class="topic-title">Hemorrhoid Banding</div><div class="topic-desc">Before, during &amp; aftercare instructions</div><span class="topic-badge badge-teal">Prep &amp; aftercare</span></div>
+      <div class="topic-card" id="card-capsule" onclick="openPanel('capsule')"><div class="topic-icon">🔮</div><div class="topic-title">Capsule Endoscopy</div><div class="topic-desc">How to prepare for your swallowable camera</div><span class="topic-badge badge-teal">Prep guide</span></div>
+      <div class="topic-card" id="card-fibroscan" onclick="openPanel('fibroscan')"><div class="topic-icon">📡</div><div class="topic-title">FibroScan®</div><div class="topic-desc">Liver stiffness testing — what to expect</div><span class="topic-badge badge-teal">What to expect</span></div>
+      <div class="topic-card" id="card-egd" onclick="openPanel('egd')"><div class="topic-icon">🔭</div><div class="topic-title">Upper Endoscopy (EGD)</div><div class="topic-desc">Prep, procedure &amp; recovery guide</div><span class="topic-badge badge-teal">Prep guide</span></div>
+      <div class="topic-card" id="card-eus" onclick="openPanel('eus')"><div class="topic-icon">🔊</div><div class="topic-title">Endoscopic Ultrasound</div><div class="topic-desc">EUS prep &amp; what to expect</div><span class="topic-badge badge-teal">Prep guide</span></div>
+      <div class="topic-card" id="card-ercp" onclick="openPanel('ercp')"><div class="topic-icon">🫀</div><div class="topic-title">ERCP</div><div class="topic-desc">Bile duct &amp; pancreas procedure guide</div><span class="topic-badge badge-teal">Prep guide</span></div>
+    </div>
+  </div>
+
+  <!-- BOWEL PREP -->
+  <div class="content-panel" id="panel-prep">
+    <div class="panel-header"><div class="panel-title">Colonoscopy Pre-Procedure Instructions</div><button class="panel-close" onclick="closePanel('prep')">Close ✕</button></div>
+
+    <p style="font-size:14px;line-height:1.7;margin-bottom:16px;">Please follow the instructions below prior to your colonoscopy. Also be sure to follow the instructions for your <strong>specific bowel preparation</strong> prescribed by your physician — select your prep below.</p>
+
+    <div class="alert alert-warning" style="margin-bottom:20px;">
+      <strong>Diabetes or Blood Thinning Medications:</strong> Please contact the provider who manages these medications before your procedure and ask whether you should stop taking them and for how long prior. Please discuss blood thinner use with your physician prior to discontinuation.
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'prep-general')">General instructions</button>
+      <button class="tab-btn" onclick="switchTab(this,'prep-suflave')">Suflave prep</button>
+      <button class="tab-btn" onclick="switchTab(this,'prep-miralax')">MiraLax / Magnesium prep</button>
+      <button class="tab-btn" onclick="switchTab(this,'prep-sutab')">Sutab prep</button>
+      <button class="tab-btn" onclick="switchTab(this,'prep-liquids')">Clear liquids guide</button>
+    </div>
+
+    <!-- GENERAL INSTRUCTIONS -->
+    <div class="tab-pane active" id="prep-general">
+      <p style="font-size:13px;color:var(--gray-light);margin-bottom:20px;">These eating and drinking instructions apply to ALL bowel preparations.</p>
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>2 Days Before Your Procedure</strong><br>
+            Do not eat foods high in fiber. Examples: whole grain breads and cereals, fruits, nuts, seeds, quinoa, popcorn, and vegetables (cooked or raw).
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>1 Day Before Your Procedure — Clear Liquid Diet Only</strong><br>
+            Do not eat solid foods. Drink only clear liquids: water, clear fat-free broth, gelatin, clear fruit juice (apple or white grape), ice pops, carbonated beverages, sports drinks, tea, and coffee (sugar okay). Do not eat or drink dairy products.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Day of Your Procedure</strong><br>
+            Do not eat solid foods.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>Medications</strong><br>
+            If you take daily medications, you may take them with sips of water before your scheduled arrival time. If you have diabetes or take blood thinners, follow instructions from the provider who manages those medications.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <strong>Transportation</strong><br>
+            Make arrangements for a responsible adult to drive you home. You may NOT leave in a taxi, rideshare, or other transportation service without a responsible adult accompanying you.
+          </div>
+        </li>
+      </ol>
+      <div class="alert alert-info"><strong>Is my prep working?</strong> Your prep is complete when your stool output is clear yellow or pale — similar to apple juice with no solid material. If you are still passing brown or cloudy material, contact our office.</div>
+      <div class="alert alert-danger"><strong>Do NOT take iron for one week prior to your procedure.</strong> Notify our office if you are taking any blood thinners or GLP-1 agonists (diabetes/weight loss injectable medications such as Ozempic, Wegovy, Mounjaro).</div>
+    </div>
+
+    <!-- SUFLAVE PREP -->
+    <div class="tab-pane" id="prep-suflave">
+      <p style="font-size:13px;font-weight:600;color:var(--teal-dark);margin-bottom:4px;">FOLLOW THESE INSTRUCTIONS ONLY. DO NOT FOLLOW INSTRUCTIONS ON/IN THE BOX.</p>
+      <p style="font-size:13px;color:var(--gray-light);margin-bottom:20px;">Obtain Suflave prep from pharmacy plus <strong>2 Dulcolax Laxative tablets</strong>.</p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>2 Days Before Procedure</strong><br>
+            Regular diet. Take 2 Dulcolax Laxative tablets at bedtime.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Day Before Procedure — Clear Liquid Diet Only</strong><br>
+            Drink ONLY clear liquids the entire day. Nothing solid to eat. Avoid all alcoholic beverages.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Day Before at 5:00 PM — First Dose</strong><br>
+            Open 1 flavor enhancing packet and pour contents into 1 bottle. Fill the provided bottle with lukewarm water up to the fill line. Cap and gently shake until dissolved. (You may refrigerate for 1 hour before drinking.)<br><br>
+            Drink 8 oz of solution every 15 minutes until the bottle is empty.<br>
+            After finishing, drink <strong>16 oz of water</strong> within the next 1–2 hours. <em>This must be water — it may never be replaced with another clear liquid.</em>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>Day Before at 10:00 PM — Second Dose</strong><br>
+            Repeat the same process with the second bottle.<br>
+            Drink 8 oz of solution every 15 minutes until empty.<br>
+            After finishing, drink <strong>16 oz of water</strong> within the next hour.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <strong>Nothing by mouth after MIDNIGHT</strong> before your procedure. This includes gum, mints, and chewing tobacco. You may brush your teeth.
+          </div>
+        </li>
+      </ol>
+      <div class="alert alert-warning">
+        <strong>Medications:</strong> Take heart, blood pressure, thyroid, acid reflux, or seizure medications the morning of the procedure with a small amount of water. If you take diabetes medications by mouth, do NOT take them the morning of the procedure.
+      </div>
+      <div class="alert alert-info">Questions? Call our <strong>Covington office: 985-871-1721 ext. 443</strong> or <strong>Slidell office: 985-641-8982 ext. 151</strong></div>
+    </div>
+
+    <!-- MIRALAX / MAGNESIUM PREP -->
+    <div class="tab-pane" id="prep-miralax">
+      <p style="font-size:13px;color:var(--gray-light);margin-bottom:20px;">Purchase the following items before your prep day:</p>
+      <div class="card-grid" style="margin-bottom:20px;">
+        <div class="info-card"><h4>What to purchase</h4><p>(4) Dulcolax Laxative tablets · (1) bottle of Magnesium Citrate (any flavor) · (1) 8.3 oz bottle of MiraLAX — or you may substitute (2) 4.1 oz bottles of MiraLAX</p></div>
+        <div class="info-card"><h4>Day before: Clear liquids only</h4><p>Drink ONLY clear liquids the entire day. Nothing solid to eat. Avoid all alcoholic beverages. See the "Clear Liquids Guide" tab for the full list.</p></div>
+      </div>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>Day Before at 3:00 PM</strong><br>
+            Take all <strong>four Dulcolax Laxative tablets</strong>.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Day Before at 5:00 PM</strong><br>
+            Mix 7 capfuls of MiraLAX with 32 oz of clear liquid (Gatorade or other clear liquid). Drink over 1–2 hours.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Day Before at 7:00 PM</strong><br>
+            Drink 1 bottle of Magnesium Citrate followed by 8–16 oz of clear liquid over 1–2 hours.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>Day Before at 10:00 PM</strong><br>
+            Mix 7 capfuls of MiraLAX with 32 oz of clear liquid. Drink over 1–2 hours.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <strong>Nothing by mouth after MIDNIGHT</strong> before your procedure. This includes gum, mints, and chewing tobacco. You may brush your teeth.
+          </div>
+        </li>
+      </ol>
+      <div class="alert alert-warning">
+        <strong>Medications:</strong> Take heart, blood pressure, thyroid, acid reflux, or seizure medications the morning of the procedure with a small amount of water. If you take diabetes medications by mouth, do NOT take them the morning of the procedure.
+      </div>
+      <div class="alert alert-info">Questions? Call our <strong>Covington office: 985-871-1721 ext. 443</strong> or <strong>Slidell office: 985-641-8982 ext. 151</strong></div>
+    </div>
+
+    <!-- SUTAB PREP -->
+    <div class="tab-pane" id="prep-sutab">
+      <p style="font-size:13px;font-weight:600;color:var(--teal-dark);margin-bottom:4px;">FOLLOW THESE INSTRUCTIONS ONLY. DO NOT FOLLOW INSTRUCTIONS ON/IN THE BOX.</p>
+      <p style="font-size:13px;color:var(--gray-light);margin-bottom:20px;">Pick up your Sutab prep plus <strong>2 Dulcolax Laxative tablets</strong> from the pharmacy.</p>
+
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>2 Days Before Procedure</strong><br>
+            Regular diet. Take 2 Dulcolax Laxative tablets at bedtime.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Day Before Procedure — Clear Liquid Diet Only</strong><br>
+            Drink ONLY clear liquids the entire day. Nothing solid to eat. See the "Clear Liquids Guide" tab for the full list.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Day Before at 5:00 PM — First Dose (12 tablets)</strong><br>
+            Open 1 bottle of 12 tablets. Fill the provided container with 16 oz of water. Swallow each tablet with a sip of water — you may take up to 1 hour to swallow all 12 tablets and drink the entire 16 oz of water.<br><br>
+            Over the next 1–2 hours, drink <strong>2 additional 16 oz containers of water (32 oz total).</strong> <em>This must be water — it may never be replaced with another clear liquid.</em>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>Day Before at 10:00 PM — Second Dose (12 tablets)</strong><br>
+            Open the 2nd bottle of 12 tablets. Fill the provided container with 16 oz of water. Swallow each tablet with a sip of water — you may take up to 1 hour to finish.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <strong>Nothing by mouth after MIDNIGHT</strong> before your procedure. This includes gum, mints, and chewing tobacco. You may brush your teeth.
+          </div>
+        </li>
+      </ol>
+      <div class="alert alert-warning">
+        <strong>Medications:</strong> Take heart, blood pressure, thyroid, acid reflux, or seizure medications the morning of the procedure with a small amount of water. If you take diabetes medications by mouth, do NOT take them the morning of the procedure.
+      </div>
+      <div class="alert alert-info">Questions? Call our <strong>Covington office: 985-871-1721 ext. 443</strong> or <strong>Slidell office: 985-641-8982 ext. 151</strong></div>
+    </div>
+
+    <!-- CLEAR LIQUIDS GUIDE -->
+    <div class="tab-pane" id="prep-liquids">
+      <p style="font-size:13px;color:var(--gray-light);margin-bottom:16px;">On the day before your procedure, you may only consume clear liquids. This applies to all prep types.</p>
+      <div class="card-grid">
+        <div class="info-card">
+          <h4>✅ Clear liquids you CAN have</h4>
+          <p>Water &amp; flavored water · Strained fruit juices — pulp free (apple, white grape) · Coffee or tea — no milk or nondairy creamer (sugar is okay) · Clear broth or bouillon · Kool-Aid · Gatorade &amp; sports drinks · Soft drinks / carbonated beverages · Ensure Clear · Plain Jell-O — no fruit or topping · Popsicles, Italian ice, snowballs</p>
+        </div>
+        <div class="info-card">
+          <h4>❌ Items you must AVOID</h4>
+          <p>All solid foods · Dairy products (milk, cream, yogurt, ice cream) · Anything with pulp · Alcohol · Red or purple colored drinks or Jell-O (they can resemble blood during the procedure)</p>
+        </div>
+      </div>
+      <div class="alert alert-warning"><strong>No red or purple liquids or gelatin.</strong> These colors can be confused with blood during your procedure. Choose clear, yellow, orange, or green colored options instead.</div>
+      <div class="alert alert-danger"><strong>Avoid all alcoholic beverages</strong> on the day before and day of your procedure.</div>
+    </div>
+
+    <!-- CANCELLATION POLICY -->
+    <div style="margin-top:28px;padding:18px 20px;background:var(--sand);border:1px solid var(--border);border-radius:var(--radius);border-left:3px solid var(--teal);">
+      <p style="font-size:13px;font-weight:600;color:var(--teal-dark);margin-bottom:6px;">Cancellation Policy</p>
+      <p style="font-size:13px;color:var(--gray-light);line-height:1.7;">If you need to cancel your procedure, please call at least <strong>48 hours prior</strong> to your scheduled procedure time. Failure to call 48 hours prior will result in a <strong>$200 cancellation fee.</strong></p>
+      <p style="font-size:13px;color:var(--gray-light);margin-top:8px;">Covington Office: <strong>985-871-1721 ext. 443</strong> &nbsp;·&nbsp; Slidell Office: <strong>985-641-8982 ext. 151</strong></p>
+    </div>
+
+    <div class="panel-disclaimer">These are the official prep instructions for Gastro Group &amp; Endocenter. Always follow the specific written instructions provided to you at scheduling. Contact our office with any questions before your procedure.</div>
+  </div>
+
+  <!-- BREATH TESTING -->
+  <div class="content-panel" id="panel-breath">
+    <div class="panel-header"><div class="panel-title">Breath Testing — FoodMarble AIRE</div><button class="panel-close" onclick="closePanel('breath')">Close ✕</button></div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'breath-sibo')">SIBO test</button>
+      <button class="tab-btn" onclick="switchTab(this,'breath-lactose')">Lactose</button>
+      <button class="tab-btn" onclick="switchTab(this,'breath-fructose')">Fructose</button>
+      <button class="tab-btn" onclick="switchTab(this,'breath-results')">Reading results</button>
+    </div>
+    <div class="tab-pane active" id="breath-sibo">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text"><strong>48 hours before:</strong> Avoid high-fiber foods, fermented foods (yogurt, kefir, sauerkraut, kombucha), and probiotics.</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>24 hours before:</strong> Avoid complex carbohydrates — no beans, lentils, whole grains, or starchy vegetables.</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>12 hours before:</strong> Fast completely — water only. No smoking. Avoid vigorous exercise.</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Morning of test:</strong> Do not brush teeth with toothpaste or use mouthwash. No probiotics. Water is fine.</div></li>
+        <li><div class="step-num">5</div><div class="step-text"><strong>Baseline reading:</strong> Take a resting breath sample before consuming anything.</div></li>
+        <li><div class="step-num">6</div><div class="step-text"><strong>Consume substrate:</strong> Drink the lactulose or glucose solution provided, mixed in 8 oz water within 5 minutes.</div></li>
+        <li><div class="step-num">7</div><div class="step-text"><strong>Readings every 20 minutes</strong> for 3 hours. Remain seated between readings — no eating, drinking, or smoking.</div></li>
+        <li><div class="step-num">8</div><div class="step-text"><strong>Upload results</strong> via FoodMarble app and share your report access code with our office.</div></li>
+      </ol>
+      <div class="alert alert-warning"><strong>Positive threshold:</strong> Rise of ≥20 ppm hydrogen above baseline, or ≥10 ppm methane above baseline, within the first 90 minutes.</div>
+    </div>
+    <div class="tab-pane" id="breath-lactose">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text"><strong>24 hours before:</strong> Avoid all dairy and fermented foods.</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>12 hours before:</strong> Fast completely — water only.</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Substrate:</strong> Consume 25g lactose dissolved in 8 oz water within 5 minutes.</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Readings every 30 minutes</strong> for 3 hours. Record all symptoms (bloating, cramping, diarrhea).</div></li>
+      </ol>
+    </div>
+    <div class="tab-pane" id="breath-fructose">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text"><strong>24 hours before:</strong> Avoid high-fructose fruits (apples, pears, mangoes, watermelon), honey, agave, HFCS.</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>12 hours before:</strong> Fast completely — water only.</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Substrate:</strong> Consume 25g fructose dissolved in 8 oz water within 5 minutes.</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Readings every 30 minutes</strong> for 3 hours. Record all symptoms.</div></li>
+      </ol>
+    </div>
+    <div class="tab-pane" id="breath-results">
+      <div class="card-grid">
+        <div class="info-card"><h4>Hydrogen (H₂) — normal</h4><p>Baseline under 20 ppm. Rise less than 20 ppm throughout. Bacteria are not fermenting the substrate in the small intestine.</p></div>
+        <div class="info-card"><h4>Hydrogen — positive SIBO</h4><p>Rise of ≥20 ppm above baseline within the first 90 minutes of the lactulose or glucose test.</p></div>
+        <div class="info-card"><h4>Methane (CH₄) — IMO</h4><p>Any reading ≥10 ppm above baseline suggests intestinal methanogen overgrowth, associated with constipation-predominant symptoms.</p></div>
+        <div class="info-card"><h4>Flat-line result</h4><p>If neither rises meaningfully, SIBO is unlikely. A small number of patients produce hydrogen sulfide — not measurable by standard devices — and may need further evaluation.</p></div>
+      </div>
+    </div>
+    <div class="panel-disclaimer">Results are interpreted by your physician in the context of your full clinical picture. Do not self-treat based on these results.</div>
+  </div>
+
+  <!-- PATHOLOGY -->
+  <div class="content-panel" id="panel-pathology">
+    <div class="panel-header"><div class="panel-title">Understanding Your Pathology Report</div><button class="panel-close" onclick="closePanel('pathology')">Close ✕</button></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Hyperplastic polyp <div class="faq-arrow">+</div></div><div class="faq-a">Very common and considered benign. No meaningful cancer risk. Does not typically shorten your surveillance interval.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Tubular adenoma (1–2, small) <div class="faq-arrow">+</div></div><div class="faq-a">Pre-cancerous but low risk when found early and completely removed. Typically leads to a 3–5 year follow-up colonoscopy recommendation.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Tubulovillous or villous adenoma <div class="faq-arrow">+</div></div><div class="faq-a">Higher cancer potential than tubular adenomas. Requires closer follow-up — typically 1–3 years depending on size and completeness of removal.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Low-grade vs. high-grade dysplasia <div class="faq-arrow">+</div></div><div class="faq-a">Dysplasia describes how abnormal cells look under a microscope. Low-grade is expected in any adenoma. High-grade carries higher risk — your physician will discuss a specific follow-up plan directly with you.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Sessile serrated lesion (SSL / SSA) <div class="faq-arrow">+</div></div><div class="faq-a">A distinct polyp type with its own cancer risk pathway. Guidelines generally recommend a 3-year follow-up colonoscopy, depending on size and whether dysplasia is present.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Chronic inactive gastritis / H. pylori <div class="faq-arrow">+</div></div><div class="faq-a">If H. pylori bacteria is identified, antibiotics plus acid suppression therapy are prescribed. A follow-up test (breath or stool antigen) is done 4–6 weeks after treatment to confirm eradication.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">"Fragments of colonic mucosa, no dysplasia" — is this normal? <div class="faq-arrow">+</div></div><div class="faq-a">Yes — completely normal. Colon tissue was sampled and no abnormal changes were found. No further action needed.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Eosinophilic esophagitis (EoE) on biopsy <div class="faq-arrow">+</div></div><div class="faq-a">A chronic immune-mediated condition where eosinophils accumulate in the esophagus. Treatment may include dietary elimination, topical steroids, PPIs, or biologic therapy (dupilumab).</div></div>
+    <div class="panel-disclaimer">Your physician will contact you directly for any result requiring follow-up. Do not adjust care plans based solely on this page.</div>
+  </div>
+
+  <!-- AFTER PROCEDURE -->
+  <div class="content-panel" id="panel-nextsteps">
+    <div class="panel-header"><div class="panel-title">After Your Procedure</div><button class="panel-close" onclick="closePanel('nextsteps')">Close ✕</button></div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'ns-colonoscopy')">After colonoscopy</button>
+      <button class="tab-btn" onclick="switchTab(this,'ns-egd')">After upper endoscopy</button>
+      <button class="tab-btn" onclick="switchTab(this,'ns-newpt')">After new patient visit</button>
+    </div>
+    <div class="tab-pane active" id="ns-colonoscopy">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text">You will receive a written summary before leaving — including findings, polyps removed, and recommended follow-up interval.</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>Biopsy results</strong> return in 3–7 business days. Our office will contact you.</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Diet:</strong> Resume regular diet as tolerated. Bloating and gas are expected for 12–24 hours.</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Sedation:</strong> No driving, alcohol, or major decisions for the rest of the day. Have a responsible adult with you.</div></li>
+        <li><div class="step-num">5</div><div class="step-text"><strong>If a polyp was removed:</strong> Avoid NSAIDs (ibuprofen, Advil, Aleve, naproxen) and aspirin for 7 days. Tylenol is safe.</div></li>
+      </ol>
+      <div class="alert alert-danger"><strong>Go to the ER immediately if:</strong> heavy rectal bleeding, severe abdominal pain, rigid abdomen, fever above 101°F, inability to pass gas after 3 days, or chest pain.</div>
+    </div>
+    <div class="tab-pane" id="ns-egd">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text">Mild sore throat is common for 1–2 days. Ice chips, throat lozenges, and soft foods help.</div></li>
+        <li><div class="step-num">2</div><div class="step-text">Resume regular diet as tolerated (unless dilation was performed — follow specific instructions given).</div></li>
+        <li><div class="step-num">3</div><div class="step-text">Biopsy results return in 3–7 business days. H. pylori results may take up to 2 weeks.</div></li>
+        <li><div class="step-num">4</div><div class="step-text">Same sedation restrictions — no driving for the rest of the day.</div></li>
+      </ol>
+    </div>
+    <div class="tab-pane" id="ns-newpt">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text">Labs, imaging, or records ordered today will be reviewed upon receipt — you do not need to call to confirm they arrived.</div></li>
+        <li><div class="step-num">2</div><div class="step-text">If a procedure was scheduled, prep instructions will be sent within 2 business days.</div></li>
+        <li><div class="step-num">3</div><div class="step-text">New prescriptions may take 24–48 hours at your pharmacy. Contact the pharmacy before calling our office.</div></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- BILLING -->
+  <div class="content-panel" id="panel-billing">
+    <div class="panel-header"><div class="panel-title">Billing &amp; Insurance FAQ</div><button class="panel-close" onclick="closePanel('billing')">Close ✕</button></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Why did I receive two or three separate bills? <div class="faq-arrow">+</div></div><div class="faq-a">Standard for GI procedures. You may receive separate bills from: (1) our physician group, (2) the facility (surgery center or hospital), and (3) a pathology lab if biopsies were taken. Each is processed independently by your insurance.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">My colonoscopy was "screening" — why was I billed? <div class="faq-arrow">+</div></div><div class="faq-a">If a polyp was removed, some insurance plans reclassify the visit as "diagnostic" — the "polyp rule." This can result in a deductible or co-pay. Contact your insurance carrier to understand your specific plan benefits.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">What is the pathology charge? <div class="faq-arrow">+</div></div><div class="faq-a">If biopsies or polyps were sent to a lab, you will receive a separate bill from that laboratory — independent of physician and facility charges.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">What is the anesthesia / CRNA charge? <div class="faq-arrow">+</div></div><div class="faq-a">If monitored anesthesia was used, an anesthesiologist or CRNA administered your sedation and bills separately. Confirm anesthesia coverage with your carrier before your procedure when possible.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">How do I set up a payment plan? <div class="faq-arrow">+</div></div><div class="faq-a">Our billing department offers payment plans and financial hardship assistance. Call the number on your statement to discuss options.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">What are my rights under the No Surprises Act? <div class="faq-arrow">+</div></div><div class="faq-a">Federal law (effective 2022) protects patients from unexpected out-of-network bills in many situations. If you received a surprise balance bill, contact your insurance or visit cms.gov/nosurprises.</div></div>
+    <div class="panel-disclaimer">For account-specific billing questions, please call the number on your statement.</div>
+  </div>
+
+  <!-- CONDITIONS -->
+  <div class="content-panel" id="panel-conditions">
+    <div class="panel-header"><div class="panel-title">Condition Library</div><button class="panel-close" onclick="closePanel('conditions')">Close ✕</button></div>
+    <p style="font-size:13px;color:var(--gray-light);margin-bottom:16px;">Select a condition below to learn about symptoms, diagnosis, and treatment options.</p>
+
+    <div style="margin-bottom:10px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);">Functional &amp; Motility Disorders</span></div>
+    <div class="tabs" style="margin-bottom:20px;">
+      <button class="tab-btn active" onclick="switchTab(this,'cond-ibs')">IBS</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-constipation')">Constipation</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-gastroparesis')">Gastroparesis</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-fecal')">Fecal Incontinence</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-pelvic')">Pelvic Floor Dysfunction</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-sod')">Sphincter of Oddi</button>
+    </div>
+
+    <div style="margin-bottom:10px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);">Esophageal Conditions</span></div>
+    <div class="tabs" style="margin-bottom:20px;">
+      <button class="tab-btn" onclick="switchTab(this,'cond-gerd')">GERD</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-barrett')">Barrett's Esophagus</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-eoe')">EoE</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-achalasia')">Achalasia</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-spasm')">Esophageal Spasm</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-stricture')">Esophageal Stricture</button>
+    </div>
+
+    <div style="margin-bottom:10px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);">Inflammatory &amp; Immune Conditions</span></div>
+    <div class="tabs" style="margin-bottom:20px;">
+      <button class="tab-btn" onclick="switchTab(this,'cond-ibd')">IBD</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-celiac')">Celiac</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-hpylori')">H. pylori</button>
+    </div>
+
+    <div style="margin-bottom:10px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);">Small Intestine &amp; Malabsorption</span></div>
+    <div class="tabs" style="margin-bottom:20px;">
+      <button class="tab-btn" onclick="switchTab(this,'cond-sibo')">SIBO / IMO</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-bad')">Bile Acid Diarrhea</button>
+      <button class="tab-btn" onclick="switchTab(this,'cond-epi')">Exocrine Pancreatic Insufficiency</button>
+    </div>
+
+    <div style="margin-bottom:10px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);">Liver, Biliary &amp; Pancreas</span></div>
+    <div class="tabs" style="margin-bottom:20px;">
+      <button class="tab-btn" onclick="switchTab(this,'cond-cirrhosis')">Cirrhosis</button>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding-top:20px;">
+
+    <div class="tab-pane active" id="cond-ibs"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Irritable Bowel Syndrome (IBS)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">A functional gut-brain disorder causing chronic abdominal pain, bloating, and altered bowel habits. Not inflammatory — does not cause tissue damage or increase cancer risk. Diagnosis is based on Rome IV criteria.</p><div class="card-grid"><div class="info-card"><h4>Subtypes</h4><p>IBS-D (diarrhea predominant), IBS-C (constipation predominant), IBS-M (mixed), IBS-U (unclassified).</p></div><div class="info-card"><h4>Common triggers</h4><p>High-FODMAP foods, stress, hormonal changes, antibiotics, prior GI infection (post-infectious IBS).</p></div><div class="info-card"><h4>Management</h4><p>Low-FODMAP diet, gut-directed CBT or hypnotherapy, antispasmodics, rifaximin (IBS-D), linaclotide or plecanatide (IBS-C).</p></div><div class="info-card"><h4>Alarm features — report to your doctor</h4><p>Rectal bleeding, unintentional weight loss, nighttime symptoms, fever, or family history of colon cancer or IBD.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-constipation"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Chronic Constipation</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Chronic constipation is defined as fewer than 3 spontaneous bowel movements per week, often accompanied by straining, hard stools, a sense of incomplete evacuation, or bloating. It may be primary (functional) or secondary to medications, metabolic conditions, or structural problems.</p><div class="card-grid"><div class="info-card"><h4>Common causes</h4><p>Low fiber/fluid intake, sedentary lifestyle, medications (opioids, calcium channel blockers, iron), hypothyroidism, diabetes, pelvic floor dysfunction, slow-transit constipation.</p></div><div class="info-card"><h4>Evaluation</h4><p>History and physical exam, colonoscopy if alarm features are present, anorectal manometry or defecography for suspected pelvic floor dysfunction, colonic transit study if slow transit is suspected.</p></div><div class="info-card"><h4>Treatment</h4><p>Increased fiber and fluid intake, exercise, osmotic laxatives (MiraLAX, lactulose), stimulant laxatives, secretagogues (linaclotide, plecanatide, lubiprostone), prucalopride for severe slow-transit constipation.</p></div><div class="info-card"><h4>Alarm features</h4><p>Rectal bleeding, weight loss, new constipation after age 45, family history of colorectal cancer — warrant colonoscopy evaluation.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-gastroparesis"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Gastroparesis</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Gastroparesis is delayed gastric emptying in the absence of mechanical obstruction. The stomach muscles do not contract normally, causing food to remain in the stomach too long. The most common causes are diabetes, post-surgical, and idiopathic (unknown cause).</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Nausea, vomiting (often of undigested food), early satiety, postprandial fullness, bloating, abdominal pain, unintentional weight loss.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Gastric emptying scintigraphy (nuclear medicine scan) is the gold standard. Upper endoscopy is performed first to rule out obstruction. Wireless motility capsule is an alternative test.</p></div><div class="info-card"><h4>Dietary management</h4><p>Small, frequent meals (4–6 per day). Low-fat, low-fiber foods. Soft or liquid textures. Avoid carbonated beverages, alcohol, and large meals. A registered dietitian consultation is recommended.</p></div><div class="info-card"><h4>Medical treatment</h4><p>Prokinetic agents (metoclopramide, domperidone, erythromycin). Antiemetics for symptom control. Glycemic control is critical in diabetic gastroparesis. Gastric electrical stimulation for refractory cases.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-fecal"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Fecal Incontinence</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Fecal incontinence is the involuntary loss of bowel control, leading to unexpected leakage of stool. It is more common than often reported, as many patients are reluctant to discuss it. It significantly impacts quality of life but is treatable.</p><div class="card-grid"><div class="info-card"><h4>Common causes</h4><p>Anal sphincter injury (obstetric trauma, prior surgery), rectal prolapse, chronic diarrhea, neurological conditions (diabetes, multiple sclerosis), rectal urgency from IBD or IBS.</p></div><div class="info-card"><h4>Evaluation</h4><p>Anorectal manometry measures sphincter pressure and rectal sensation. Endoanal ultrasound evaluates sphincter anatomy. Defecography assesses rectal prolapse or structural abnormalities.</p></div><div class="info-card"><h4>Treatment</h4><p>Dietary modification, bulking agents, antidiarrheals (loperamide), biofeedback and pelvic floor physical therapy, sacral nerve stimulation (SNS), sphincter repair surgery for selected patients.</p></div><div class="info-card"><h4>Important note</h4><p>Fecal incontinence is a medical condition, not a normal part of aging. Please discuss symptoms openly with your physician — effective treatments are available.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-pelvic"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Pelvic Floor Dysfunction</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Pelvic floor dysfunction (dyssynergic defecation) occurs when the pelvic floor muscles and external anal sphincter fail to coordinate properly during defecation. Instead of relaxing to allow stool passage, they paradoxically contract, causing obstructed defecation.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Excessive straining, inability to defecate despite urge, sensation of incomplete evacuation, need for manual maneuvers to pass stool, chronic constipation unresponsive to laxatives.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Anorectal manometry with balloon expulsion test is the primary diagnostic tool. Defecography (X-ray or MRI) evaluates structural and functional abnormalities during defecation.</p></div><div class="info-card"><h4>Treatment</h4><p>Biofeedback therapy is the most effective treatment — retraining the pelvic floor muscles through guided exercises and sensory feedback. Pelvic floor physical therapy. Botulinum toxin injection for refractory cases.</p></div><div class="info-card"><h4>Related conditions</h4><p>Pelvic floor dysfunction may coexist with IBS-C, chronic pelvic pain, interstitial cystitis, and in women, pelvic organ prolapse.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-sod"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Sphincter of Oddi Dysfunction (SOD)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">The sphincter of Oddi is a muscular valve that controls the flow of bile and pancreatic juice into the small intestine. Sphincter of Oddi dysfunction occurs when this valve does not open properly, causing pain and potentially elevated liver or pancreatic enzymes. It is most commonly encountered in patients who have had their gallbladder removed.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Episodic right upper quadrant or epigastric pain, often severe and lasting 30+ minutes. May be accompanied by nausea and vomiting. Symptoms may mimic biliary colic after cholecystectomy.</p></div><div class="info-card"><h4>Types</h4><p>Biliary SOD (affecting bile flow) and pancreatic SOD (affecting pancreatic drainage). Classification is based on symptom pattern, liver enzyme elevation, and bile duct dilation.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Liver function tests and bilirubin during pain episodes. MRCP or EUS to evaluate bile and pancreatic ducts. Sphincter of Oddi manometry via ERCP in selected cases.</p></div><div class="info-card"><h4>Treatment</h4><p>Smooth muscle relaxants, calcium channel blockers, endoscopic sphincterotomy (cutting the sphincter via ERCP) for selected patients with documented dysfunction. Management is individualized.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-gerd"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">GERD (Gastroesophageal Reflux Disease)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">GERD occurs when stomach acid regularly refluxes into the esophagus, causing symptoms or mucosal damage. It is one of the most common GI conditions in the United States. Chronic untreated GERD can progress to esophagitis, Barrett's esophagus, and in rare cases esophageal adenocarcinoma.</p><div class="card-grid"><div class="info-card"><h4>Common symptoms</h4><p>Heartburn, regurgitation, chronic cough, hoarseness, lump-in-throat sensation (globus), difficulty swallowing, chest discomfort.</p></div><div class="info-card"><h4>Lifestyle changes</h4><p>Elevate head of bed 6–8 inches, avoid eating within 3 hours of bedtime, lose weight if overweight, avoid caffeine, alcohol, chocolate, fatty and spicy foods, peppermint.</p></div><div class="info-card"><h4>Medical treatment</h4><p>PPIs (omeprazole, pantoprazole, esomeprazole) — take 30–60 minutes before first meal. H2 blockers for milder symptoms. Long-term PPI use requires periodic reassessment.</p></div><div class="info-card"><h4>When endoscopy is needed</h4><p>Alarm symptoms (dysphagia, weight loss, bleeding), symptoms unresponsive to treatment, chronic GERD to screen for Barrett's esophagus, or if diagnosis is uncertain.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-barrett"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Barrett's Esophagus</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Barrett's esophagus is a complication of chronic GERD in which the normal squamous lining of the lower esophagus is replaced by intestinal-type (columnar) epithelium. This change, called intestinal metaplasia, carries an increased risk of progression to esophageal adenocarcinoma. However, the absolute annual risk of cancer in Barrett's is low (approximately 0.1–0.3% per year).</p><div class="card-grid"><div class="info-card"><h4>Who is at risk?</h4><p>Chronic GERD (over 5 years), male sex, age over 50, obesity (especially central), smoking history, white race, family history of Barrett's or esophageal adenocarcinoma.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Upper endoscopy with biopsies. Barrett's is diagnosed when intestinal metaplasia is confirmed on pathology. Length of involvement (short segment vs. long segment) is documented.</p></div><div class="info-card"><h4>Surveillance</h4><p>Endoscopic surveillance intervals depend on the degree of dysplasia: no dysplasia (every 3–5 years), low-grade dysplasia (every 6–12 months or ablation), high-grade dysplasia (ablation recommended).</p></div><div class="info-card"><h4>Treatment</h4><p>Aggressive acid suppression with PPI therapy. Endoscopic eradication therapy (radiofrequency ablation, endoscopic mucosal resection) for dysplastic Barrett's. Surgery reserved for advanced cases.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-eoe"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Eosinophilic Esophagitis (EoE)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">A chronic immune-mediated condition where eosinophils accumulate in the esophageal lining, causing inflammation, tissue remodeling, and narrowing. It is increasingly recognized in adults and children.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Difficulty swallowing (dysphagia), food getting stuck (food impaction), heartburn unresponsive to PPIs, chest pain, vomiting in children.</p></div><div class="info-card"><h4>Common food triggers</h4><p>Milk, wheat, eggs, soy, tree nuts, seafood — the "big six" elimination targets.</p></div><div class="info-card"><h4>Treatment</h4><p>Topical corticosteroids (budesonide, fluticasone), PPIs, dietary elimination (2-food, 4-food, or 6-food), dupilumab (biologic) for moderate-severe disease.</p></div><div class="info-card"><h4>Monitoring</h4><p>Repeat endoscopy with biopsies to assess treatment response. Esophageal dilation for strictures or rings causing significant dysphagia.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-achalasia"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Achalasia</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Achalasia is a rare motility disorder of the esophagus in which the lower esophageal sphincter (LES) fails to relax properly and the esophagus loses its normal peristaltic contractions. Food and liquid accumulate in the esophagus and cannot pass normally into the stomach.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Progressive difficulty swallowing both solids and liquids, regurgitation of undigested food (especially at night), chest pain or pressure, weight loss, recurrent aspiration or pneumonia.</p></div><div class="info-card"><h4>Diagnosis</h4><p>High-resolution esophageal manometry is the gold standard. Barium swallow shows a "bird's beak" narrowing at the LES. Upper endoscopy rules out pseudoachalasia from malignancy.</p></div><div class="info-card"><h4>Treatment</h4><p>Pneumatic dilation (endoscopic balloon stretching of the LES), Heller myotomy (surgical cutting of the LES muscle), or POEM (Per-Oral Endoscopic Myotomy — a minimally invasive endoscopic procedure). Botulinum toxin injection for patients who are poor candidates for other procedures.</p></div><div class="info-card"><h4>Types</h4><p>Type I (classic), Type II (most common, best treatment response), and Type III (spastic achalasia). Classified by high-resolution manometry patterns.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-spasm"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Esophageal Spasm</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Esophageal spasm refers to abnormal, uncoordinated contractions of the esophageal muscle. The two main types are distal esophageal spasm (DES) and jackhammer esophagus (hypercontractile esophagus). These are motility disorders diagnosed by high-resolution manometry.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Intermittent chest pain (can mimic cardiac pain), difficulty swallowing, regurgitation. Symptoms are often unpredictable and can be triggered by hot or cold liquids, stress, or eating quickly.</p></div><div class="info-card"><h4>Diagnosis</h4><p>High-resolution esophageal manometry is the definitive test. Upper endoscopy and cardiac evaluation are performed first to rule out structural and cardiac causes of chest pain.</p></div><div class="info-card"><h4>Treatment</h4><p>Smooth muscle relaxants (nitrates, calcium channel blockers), tricyclic antidepressants or SSRIs for pain modulation, peppermint oil, endoscopic botulinum toxin injection, or POEM for refractory cases.</p></div><div class="info-card"><h4>Reassurance</h4><p>Esophageal spasm is not dangerous and does not increase cancer risk. Many patients improve with reassurance, dietary modifications, and stress management.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-stricture"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Esophageal Stricture</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">An esophageal stricture is a narrowing of the esophagus that causes difficulty swallowing. Strictures can be benign (non-cancerous) or malignant. The most common causes of benign strictures are chronic GERD (Schatzki ring, peptic stricture), eosinophilic esophagitis, and prior radiation therapy.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Progressive difficulty swallowing solids more than liquids, food impaction, regurgitation, weight loss, sensation of food sticking in the chest or throat.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Upper endoscopy is both diagnostic and therapeutic. Barium swallow identifies the level and degree of narrowing. Biopsies are taken to rule out malignancy or EoE.</p></div><div class="info-card"><h4>Treatment</h4><p>Endoscopic dilation (bougie or balloon dilation) is the primary treatment for benign strictures. Multiple sessions may be required for fibrotic strictures. Acid suppression treats the underlying GERD. Steroid injection for refractory strictures.</p></div><div class="info-card"><h4>Malignant strictures</h4><p>Strictures caused by esophageal cancer require oncologic evaluation. Endoscopic stent placement may be used for palliation of malignant dysphagia.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-ibd"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Inflammatory Bowel Disease (IBD)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">IBD encompasses Crohn's disease and ulcerative colitis — chronic, relapsing-remitting immune-mediated conditions causing GI inflammation and tissue damage. Unlike IBS, IBD causes measurable structural damage and requires ongoing medical management.</p><div class="card-grid"><div class="info-card"><h4>Crohn's disease</h4><p>Can involve any GI segment from mouth to anus. Full-thickness (transmural) inflammation, skip lesions, risk of fistulas, abscesses, and strictures.</p></div><div class="info-card"><h4>Ulcerative colitis</h4><p>Involves the colon and rectum only. Continuous mucosal inflammation. Long-standing pancolitis increases colorectal cancer risk and requires surveillance colonoscopy.</p></div><div class="info-card"><h4>Treatment</h4><p>Aminosalicylates (UC), immunomodulators (azathioprine, methotrexate), biologics (anti-TNF, anti-integrin, IL-12/23 inhibitors), JAK inhibitors, corticosteroids for flares.</p></div><div class="info-card"><h4>Monitoring</h4><p>Regular labs (CBC, CRP, drug levels), fecal calprotectin, periodic endoscopic surveillance, bone density assessment for steroid-exposed patients.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-celiac"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Celiac Disease</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">An autoimmune condition triggered by gluten ingestion that damages the small intestinal villi, causing malabsorption. Affects approximately 1% of the population — many cases go undiagnosed or present atypically.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Diarrhea, fatigue, weight loss, iron-deficiency anemia, bone loss, elevated liver enzymes, skin rash (dermatitis herpetiformis), infertility, neurological symptoms.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Serology (tTG-IgA, total IgA) followed by upper endoscopy with duodenal biopsies. Must be tested while on a gluten-containing diet — a gluten-free diet before testing invalidates results.</p></div><div class="info-card"><h4>Treatment</h4><p>Strict lifelong gluten-free diet — the only proven treatment. Dietitian counseling strongly recommended. See the Diet section of this site for gluten-free guidance.</p></div><div class="info-card"><h4>Follow-up</h4><p>Repeat serology at 6–12 months. Check for nutritional deficiencies (iron, B12, folate, vitamin D, zinc). DEXA scan for bone density if indicated.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-hpylori"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Helicobacter pylori (H. pylori)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">H. pylori is a spiral-shaped bacterium that colonizes the stomach lining. It is one of the most common chronic bacterial infections worldwide, affecting approximately 50% of the global population. H. pylori is the leading cause of peptic ulcer disease and is classified as a Group I carcinogen for gastric cancer.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Many people are asymptomatic. When symptoms occur: burning or gnawing stomach pain (often relieved by eating or antacids), nausea, loss of appetite, frequent belching, bloating. Ulcers may cause more severe pain, vomiting, or GI bleeding.</p></div><div class="info-card"><h4>Testing methods</h4><p>Urea breath test (non-invasive, best for confirming eradication), stool antigen test, upper endoscopy with gastric biopsies (most accurate, also allows ulcer evaluation), serology (blood test — cannot confirm active infection).</p></div><div class="info-card"><h4>Treatment</h4><p>Antibiotic-based eradication regimens (typically 10–14 days): standard triple therapy, bismuth quadruple therapy, or vonoprazan-based regimens. Acid suppression with PPI is included in all regimens. Antibiotic resistance guides regimen selection.</p></div><div class="info-card"><h4>Confirming eradication</h4><p>A urea breath test or stool antigen test is performed at least 4 weeks after completing treatment to confirm H. pylori has been eradicated. Testing must be done off PPIs for at least 2 weeks before the breath test.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-sibo"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">SIBO / IMO (Small Intestinal Bacterial &amp; Methanogen Overgrowth)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">SIBO occurs when bacteria that normally reside in the colon migrate into or proliferate excessively in the small intestine, causing fermentation, gas production, and symptoms. The methane-producing variant is now termed IMO (intestinal methanogen overgrowth).</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Bloating (often worst after meals), belching, abdominal distension, diarrhea (SIBO) or constipation (IMO), nausea, and in severe cases weight loss and nutritional deficiencies.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Lactulose or glucose hydrogen/methane breath test. See the Breath Testing section for our FoodMarble AIRE protocol and interpretation guide.</p></div><div class="info-card"><h4>Treatment</h4><p>Rifaximin (hydrogen SIBO), rifaximin + neomycin (IMO), elemental diet, prokinetics to address underlying motility issues, dietary modification.</p></div><div class="info-card"><h4>Recurrence</h4><p>SIBO frequently recurs without addressing predisposing factors (motility disorders, anatomic changes, acid suppression, prior surgery). Long-term management strategy is individualized.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-bad"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Bile Acid Diarrhea (BAD) / Bile Acid Malabsorption</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Bile acid diarrhea occurs when bile acids are not properly reabsorbed in the terminal ileum and spill into the colon, where they stimulate excess fluid secretion and rapid transit, causing chronic watery diarrhea. It is significantly underdiagnosed and is frequently mistaken for IBS-D.</p><div class="card-grid"><div class="info-card"><h4>Common causes</h4><p>Cholecystectomy (gallbladder removal), Crohn's disease or resection of the terminal ileum, idiopathic (primary) bile acid malabsorption, microscopic colitis, radiation enteritis.</p></div><div class="info-card"><h4>Symptoms</h4><p>Chronic watery or urgency diarrhea, often worse after fatty meals, frequent bowel movements, fecal urgency, nocturnal diarrhea in some cases.</p></div><div class="info-card"><h4>Diagnosis</h4><p>SeHCAT scan (not available in the US), serum C4 (7α-hydroxy-4-cholesten-3-one) or FGF-19 levels, empirical trial of bile acid sequestrants, or SeHCAT where available.</p></div><div class="info-card"><h4>Treatment</h4><p>Bile acid sequestrants: cholestyramine, colesevelam (Welchol), or colestipol. Low-fat diet reduces symptoms. Response to treatment also confirms the diagnosis.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-epi"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Exocrine Pancreatic Insufficiency (EPI)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Exocrine pancreatic insufficiency occurs when the pancreas does not produce enough digestive enzymes to properly break down food, leading to malabsorption of fat, protein, and fat-soluble vitamins. EPI is most commonly caused by chronic pancreatitis, pancreatic cancer, or cystic fibrosis.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Steatorrhea (oily, foul-smelling, floating stools), chronic diarrhea, significant unintentional weight loss, bloating, flatulence, nutritional deficiencies (vitamins A, D, E, K, B12).</p></div><div class="info-card"><h4>Causes</h4><p>Chronic pancreatitis (most common), pancreatic cancer or surgery, cystic fibrosis, Shwachman-Diamond syndrome, celiac disease (secondary EPI), and diabetes (type 3c).</p></div><div class="info-card"><h4>Diagnosis</h4><p>Fecal elastase-1 test (stool test — low levels indicate EPI). Fecal fat quantification (72-hour collection). Imaging (CT, MRI) to evaluate pancreatic structure. Serum nutritional panel.</p></div><div class="info-card"><h4>Treatment</h4><p>Pancreatic enzyme replacement therapy (PERT) — taken with every meal and snack. Fat-soluble vitamin supplementation. Low-fat diet helps reduce symptoms. Treat underlying cause when possible.</p></div></div></div>
+
+    <div class="tab-pane" id="cond-cirrhosis"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Cirrhosis</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Cirrhosis is the end-stage of chronic liver disease characterized by extensive scarring (fibrosis) that disrupts normal liver architecture and function. The most common causes in the United States are chronic hepatitis C, alcoholic liver disease, and nonalcoholic steatohepatitis (NASH/MASLD).</p><div class="card-grid"><div class="info-card"><h4>Compensated vs. decompensated</h4><p>Compensated cirrhosis may be asymptomatic for years. Decompensated cirrhosis involves complications: ascites (fluid in abdomen), hepatic encephalopathy, variceal bleeding, spontaneous bacterial peritonitis, or hepatorenal syndrome.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Liver function tests, platelet count, imaging (ultrasound, CT, MRI), FibroScan (liver stiffness measurement), and in some cases liver biopsy for definitive staging.</p></div><div class="info-card"><h4>Complications &amp; monitoring</h4><p>Upper endoscopy to screen for esophageal varices. Liver ultrasound every 6 months with AFP for hepatocellular carcinoma surveillance. DEXA scan for osteoporosis. Management of portal hypertension.</p></div><div class="info-card"><h4>Treatment</h4><p>Treat underlying cause (antiviral therapy for hepatitis, alcohol cessation, weight loss for MASLD). Manage complications (diuretics for ascites, beta-blockers for varices, lactulose/rifaximin for encephalopathy). Liver transplant evaluation for advanced disease.</p></div></div></div>
+
+    </div>
+    <div class="panel-disclaimer">Condition descriptions are educational overviews. Your physician will tailor diagnosis and treatment to your specific situation. Contact our office with any questions.</div>
+  </div>
+
+  <!-- GI CANCERS -->
+  <div class="content-panel" id="panel-cancer">
+    <div class="panel-header"><div class="panel-title">GI Cancers — Overview &amp; Screening</div><button class="panel-close" onclick="closePanel('cancer')">Close ✕</button></div>
+    <p style="font-size:14px;color:var(--gray-light);line-height:1.7;margin-bottom:20px;">Early detection is the most important factor in GI cancer outcomes. This section provides general educational information about the most common GI cancers. If you have concerns about symptoms or family history, please discuss them with your physician.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'ca-colorectal')">Colorectal</button>
+      <button class="tab-btn" onclick="switchTab(this,'ca-pancreatic')">Pancreatic</button>
+      <button class="tab-btn" onclick="switchTab(this,'ca-esophageal')">Esophageal</button>
+      <button class="tab-btn" onclick="switchTab(this,'ca-gastric')">Gastric</button>
+      <button class="tab-btn" onclick="switchTab(this,'ca-biliary')">Biliary</button>
+      <button class="tab-btn" onclick="switchTab(this,'ca-hcc')">Hepatocellular</button>
+    </div>
+
+    <div class="tab-pane active" id="ca-colorectal"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Colorectal Cancer (CRC)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Colorectal cancer is the third most common cancer and second leading cause of cancer death in the United States. The vast majority arise from adenomatous polyps over 10–15 years — making colonoscopy one of the most powerful cancer prevention tools available. Most cases are preventable through screening.</p><div class="card-grid"><div class="info-card"><h4>Screening — when to start</h4><p>Average risk: begin at age 45. High risk (family history of CRC or advanced polyps in a first-degree relative before age 60): begin at age 40 or 10 years before the youngest affected relative's diagnosis, whichever is earlier. IBD patients: surveillance colonoscopy per gastroenterologist's schedule.</p></div><div class="info-card"><h4>Screening options</h4><p>Colonoscopy every 10 years (gold standard — can detect and remove polyps in one procedure). Cologuard (stool DNA test) every 3 years. FIT (fecal immunochemical test) annually. Positive non-colonoscopy tests require follow-up colonoscopy.</p></div><div class="info-card"><h4>Symptoms</h4><p>Change in bowel habits lasting more than 4 weeks, rectal bleeding or blood in stool, persistent abdominal discomfort, a feeling that the bowel does not empty completely, unexplained weight loss, fatigue from iron-deficiency anemia.</p></div><div class="info-card"><h4>Risk factors</h4><p>Age over 45, personal or family history of polyps or CRC, IBD, Lynch syndrome or FAP, obesity, physical inactivity, heavy alcohol use, smoking, red and processed meat consumption.</p></div></div></div>
+
+    <div class="tab-pane" id="ca-pancreatic"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Pancreatic Cancer</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Pancreatic ductal adenocarcinoma (PDAC) is the most common type of pancreatic cancer and one of the most lethal malignancies, largely because it is often asymptomatic until advanced stages. Early detection — when surgical resection is still possible — dramatically improves outcomes.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Painless jaundice (yellowing of skin/eyes), new-onset diabetes especially over age 50, unexplained weight loss, mid-back or upper abdominal pain, loss of appetite, light-colored stools and dark urine, acute pancreatitis without clear cause.</p></div><div class="info-card"><h4>Risk factors</h4><p>Smoking, obesity, chronic pancreatitis, new-onset diabetes (type 3c), family history (BRCA1/2, Lynch syndrome, PALB2, ATM mutations), IPMN (intraductal papillary mucinous neoplasm) cysts.</p></div><div class="info-card"><h4>Diagnosis</h4><p>CT scan with pancreatic protocol, MRI/MRCP, endoscopic ultrasound (EUS) with FNA/FNB biopsy. CA 19-9 tumor marker (not specific enough for screening but useful for monitoring).</p></div><div class="info-card"><h4>High-risk surveillance</h4><p>Patients with strong family history or genetic mutations (BRCA2, PALB2, ATM, Lynch syndrome) with a first-degree relative with pancreatic cancer may qualify for surveillance with EUS or MRI — discuss with your physician.</p></div></div></div>
+
+    <div class="tab-pane" id="ca-esophageal"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Esophageal Cancer</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">There are two main types of esophageal cancer: esophageal adenocarcinoma (arising from Barrett's esophagus, related to GERD) and squamous cell carcinoma (related to smoking and alcohol, arising in the upper/middle esophagus). Both present similarly but have different risk profiles.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Progressive dysphagia (difficulty swallowing) — first solids, then liquids, unexplained weight loss, chest pain or pressure, hoarseness, chronic cough, vomiting, or regurgitation.</p></div><div class="info-card"><h4>Risk factors — adenocarcinoma</h4><p>Chronic GERD, Barrett's esophagus, obesity, male sex, age over 50, smoking, white race.</p></div><div class="info-card"><h4>Risk factors — squamous cell</h4><p>Heavy alcohol use, tobacco smoking, achalasia, caustic ingestion injury, poor nutritional status, HPV in some populations.</p></div><div class="info-card"><h4>Prevention &amp; surveillance</h4><p>Aggressive GERD treatment and Barrett's surveillance are the primary prevention strategies for adenocarcinoma. Smoking cessation and alcohol reduction for squamous cell carcinoma risk reduction.</p></div></div></div>
+
+    <div class="tab-pane" id="ca-gastric"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Gastric (Stomach) Cancer</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Gastric cancer (stomach cancer) is the fifth most common cancer globally. The incidence has declined in Western countries due to refrigeration (reduced salt-preserved food consumption) and H. pylori eradication. However, it remains an important cancer to recognize early, as prognosis is significantly better when caught at an early stage.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Indigestion or heartburn that is new or worsening, persistent nausea, loss of appetite, unintentional weight loss, early satiety, vomiting, black tarry stools (GI bleeding), abdominal pain.</p></div><div class="info-card"><h4>Risk factors</h4><p>H. pylori infection (most important modifiable risk factor), smoking, family history, diet high in salted/smoked/preserved foods, atrophic gastritis, intestinal metaplasia, prior gastric surgery, East Asian ancestry.</p></div><div class="info-card"><h4>Diagnosis</h4><p>Upper endoscopy with biopsies is the primary diagnostic tool. CT scan for staging. EUS for local tumor staging. PET scan for metastatic evaluation.</p></div><div class="info-card"><h4>H. pylori &amp; prevention</h4><p>H. pylori eradication reduces the risk of gastric cancer. Patients with intestinal metaplasia or dysplasia on gastric biopsies require endoscopic surveillance per guidelines.</p></div></div></div>
+
+    <div class="tab-pane" id="ca-biliary"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Biliary Tract Cancer (Cholangiocarcinoma)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Biliary tract cancers include cholangiocarcinoma (cancer of the bile ducts) and gallbladder cancer. They are relatively rare but often diagnosed at an advanced stage due to vague early symptoms. Intrahepatic, perihilar, and distal cholangiocarcinomas are classified by anatomic location.</p><div class="card-grid"><div class="info-card"><h4>Symptoms</h4><p>Painless jaundice (yellowing of skin and eyes), dark urine, pale stools, right upper quadrant pain or discomfort, unexplained weight loss, itching (pruritus), fever from biliary obstruction.</p></div><div class="info-card"><h4>Risk factors</h4><p>Primary sclerosing cholangitis (PSC), hepatitis B or C, cirrhosis, biliary cysts (choledochal cysts), liver fluke infection, inflammatory bowel disease (especially UC with PSC), obesity, diabetes.</p></div><div class="info-card"><h4>Diagnosis</h4><p>MRCP (MRI of bile ducts), CT scan, ERCP with brush cytology or biopsies, EUS-guided FNA/FNB, CA 19-9 and CEA tumor markers. Histologic confirmation is required for treatment planning.</p></div><div class="info-card"><h4>Surveillance in PSC</h4><p>Patients with primary sclerosing cholangitis have a significantly elevated lifetime risk of cholangiocarcinoma. Annual MRCP and CA 19-9 testing is recommended for PSC surveillance.</p></div></div></div>
+
+    <div class="tab-pane" id="ca-hcc"><h3 style="font-size:16px;font-weight:600;margin-bottom:10px;color:var(--teal-dark);">Hepatocellular Carcinoma (HCC)</h3><p style="font-size:14px;line-height:1.8;margin-bottom:12px;">Hepatocellular carcinoma is the most common primary liver cancer and typically arises in the setting of underlying chronic liver disease or cirrhosis. It is the sixth most common cancer worldwide. Regular surveillance in high-risk patients is critical because HCC detected at an early stage can often be cured.</p><div class="card-grid"><div class="info-card"><h4>Risk factors</h4><p>Cirrhosis from any cause (hepatitis B, hepatitis C, alcohol, MASLD/NASH), chronic hepatitis B infection even without cirrhosis, aflatoxin exposure, hemochromatosis, alpha-1 antitrypsin deficiency, Wilson's disease.</p></div><div class="info-card"><h4>Symptoms</h4><p>HCC is often silent in early stages. When symptomatic: right upper quadrant pain or fullness, unexplained weight loss, loss of appetite, new or worsening jaundice, abdominal swelling (ascites), sudden deterioration in a cirrhotic patient.</p></div><div class="info-card"><h4>Surveillance — who qualifies</h4><p>All patients with cirrhosis, patients with chronic hepatitis B meeting specific criteria (age/family history/viral load), and certain patients with advanced fibrosis. Surveillance: liver ultrasound with AFP every 6 months.</p></div><div class="info-card"><h4>Treatment</h4><p>Depends on tumor size, number, liver function, and underlying disease: surgical resection, liver transplantation (curative for selected patients), ablation (RFA, microwave), TACE (transarterial chemoembolization), TARE (Y-90 radioembolization), or systemic therapy (atezolizumab + bevacizumab) for advanced HCC.</p></div></div></div>
+
+    <div class="alert alert-warning" style="margin-top:20px;"><strong>Important:</strong> This section provides general cancer education only. It is not a substitute for individualized screening recommendations from your physician. If you have symptoms, a significant family history, or known risk factors for any GI cancer, please schedule an appointment to discuss personalized screening and surveillance options.</div>
+    <div class="panel-disclaimer">Cancer information on this page is for general educational purposes. Screening guidelines evolve — your physician will provide current, individualized recommendations based on your personal and family history.</div>
+  </div>
+
+  <!-- DIET -->
+  <div class="content-panel" id="panel-diet">
+    <div class="panel-header"><div class="panel-title">Diet &amp; Nutrition Guidance</div><button class="panel-close" onclick="closePanel('diet')">Close ✕</button></div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'diet-fodmap')">Low-FODMAP</button>
+      <button class="tab-btn" onclick="switchTab(this,'diet-lowres')">Low-residue</button>
+      <button class="tab-btn" onclick="switchTab(this,'diet-postpoly')">Post-polypectomy</button>
+      <button class="tab-btn" onclick="switchTab(this,'diet-gf')">Gluten-free</button>
+    </div>
+    <div class="tab-pane active" id="diet-fodmap"><p style="font-size:14px;line-height:1.8;margin-bottom:14px;">The low-FODMAP diet reduces fermentable carbohydrates that trigger IBS symptoms. It is a <em>temporary elimination protocol</em> — not a permanent diet — followed by structured reintroduction.</p><div class="card-grid"><div class="info-card"><h4>Phase 1: Elimination (2–6 weeks)</h4><p>Remove all high-FODMAP foods: garlic, onion, wheat, rye, lactose, apples, pears, legumes, cashews, honey, HFCS.</p></div><div class="info-card"><h4>Phase 2: Reintroduction</h4><p>Reintroduce one FODMAP group at a time over 6–8 weeks to identify personal triggers. Do not skip this phase.</p></div><div class="info-card"><h4>Phase 3: Personalization</h4><p>Maintain a diet based on individual tolerances — not a blanket low-FODMAP diet indefinitely.</p></div><div class="info-card"><h4>Best resource</h4><p>The <strong>Monash University FODMAP app</strong> is the gold-standard for current FODMAP ratings of specific foods and serving sizes.</p></div></div></div>
+    <div class="tab-pane" id="diet-lowres"><div class="card-grid"><div class="info-card"><h4>✅ Foods to eat</h4><p>White bread, white rice, pasta, eggs, tender chicken or fish, well-cooked vegetables without skins, canned fruit without seeds, dairy in small amounts.</p></div><div class="info-card"><h4>❌ Foods to avoid</h4><p>Whole grains, nuts, seeds, raw vegetables, corn, popcorn, dried fruit, berries, beans, lentils, tough meats, foods with skins or hulls.</p></div></div></div>
+    <div class="tab-pane" id="diet-postpoly"><div class="card-grid"><div class="info-card"><h4>Days 1–3: Soft diet</h4><p>Eggs, yogurt, bananas, applesauce, white toast, rice, soft pasta, soup.</p></div><div class="info-card"><h4>Avoid for 7 days</h4><p>Seeds, nuts, popcorn, raw vegetables, spicy foods, NSAIDs, aspirin. Tylenol is safe for pain.</p></div></div><div class="alert alert-warning">Please discuss blood thinner use with your physician prior to discontinuation.</div></div>
+    <div class="tab-pane" id="diet-gf"><div class="card-grid"><div class="info-card"><h4>Grains to avoid</h4><p>Wheat (all forms: spelt, kamut, farro, durum, semolina), barley, rye, triticale. Oats only if certified gluten-free.</p></div><div class="info-card"><h4>Hidden gluten</h4><p>Soy sauce, malt vinegar, beer, many condiments, modified food starch, some medications and supplements.</p></div><div class="info-card"><h4>Safe grains</h4><p>Rice, corn, potatoes, quinoa, buckwheat, millet, certified GF oats, teff, amaranth, sorghum.</p></div><div class="info-card"><h4>Cross-contamination</h4><p>Use separate cutting boards and toasters. When dining out, specify celiac disease — dedicated fryers and prep surfaces matter.</p></div></div></div>
+    <div class="panel-disclaimer">A registered dietitian with GI specialty can provide individualized guidance — ask our office for a referral.</div>
+  </div>
+
+  <!-- MEDICATIONS -->
+  <div class="content-panel" id="panel-medications">
+    <div class="panel-header"><div class="panel-title">Medications Guide</div><button class="panel-close" onclick="closePanel('medications')">Close ✕</button></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Proton pump inhibitors (PPIs) — omeprazole, pantoprazole, esomeprazole <div class="faq-arrow">+</div></div><div class="faq-a">PPIs reduce acid production in the stomach. Used for GERD, ulcers, H. pylori treatment, and EoE. Take on an empty stomach 30–60 minutes before your first meal. Long-term use requires periodic reassessment.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Rifaximin (Xifaxan) <div class="faq-arrow">+</div></div><div class="faq-a">A non-absorbed, gut-selective antibiotic for SIBO and IBS-D. Stays in the GI tract with minimal systemic absorption. Typically taken three times daily for 14 days, with or without food.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Mesalamine (Lialda, Asacol HD, Pentasa) <div class="faq-arrow">+</div></div><div class="faq-a">Anti-inflammatory medication for mild-to-moderate ulcerative colitis. Works locally in the colon. Available as oral tablets, suppositories, and enemas. Take as directed — formulations vary in dosing schedule.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Budesonide (Entocort EC, Uceris) <div class="faq-arrow">+</div></div><div class="faq-a">Locally-acting corticosteroid with less systemic absorption than prednisone. Entocort EC for Crohn's involving the ileum/right colon. Uceris for ulcerative colitis. Used short-term for induction of remission.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Biologics (infliximab, adalimumab, vedolizumab, ustekinumab) <div class="faq-arrow">+</div></div><div class="faq-a">Targeted therapies that block specific immune pathways in IBD and EoE. Given by injection or IV infusion on a schedule. TB testing, hepatitis B screening, and vaccine updates required before starting. Report any signs of infection promptly.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Linaclotide (Linzess) / Plecanatide (Trulance) <div class="faq-arrow">+</div></div><div class="faq-a">Used for IBS-C and chronic constipation. Work locally to increase intestinal fluid and accelerate transit. Linzess taken on an empty stomach 30 minutes before breakfast. Diarrhea is the most common side effect.</div></div>
+    <div class="panel-disclaimer">Never stop, start, or adjust a prescribed medication without consulting your physician.</div>
+  </div>
+
+  <!-- HEMORRHOID BANDING -->
+  <div class="content-panel" id="panel-hemorrhoid">
+    <div class="panel-header"><div class="panel-title">Hemorrhoid Banding (Rubber Band Ligation)</div><button class="panel-close" onclick="closePanel('hemorrhoid')">Close ✕</button></div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'hemo-about')">What is it?</button>
+      <button class="tab-btn" onclick="switchTab(this,'hemo-before')">Before the procedure</button>
+      <button class="tab-btn" onclick="switchTab(this,'hemo-after')">Aftercare</button>
+      <button class="tab-btn" onclick="switchTab(this,'hemo-expect')">What to expect</button>
+    </div>
+    <div class="tab-pane active" id="hemo-about"><p style="font-size:14px;line-height:1.8;margin-bottom:14px;">Rubber band ligation is the most effective office-based treatment for internal hemorrhoids (grades I–III). A small elastic band is placed around the base of the hemorrhoid, cutting off its blood supply. The hemorrhoid shrinks and falls off within 7–10 days.</p><div class="card-grid"><div class="info-card"><h4>Who is it for?</h4><p>Internal hemorrhoids causing bleeding, prolapse, or discomfort that has not responded to dietary and lifestyle changes.</p></div><div class="info-card"><h4>Success rate</h4><p>Approximately 70–80% effective per session. Most patients require 2–3 sessions spaced 4–6 weeks apart.</p></div><div class="info-card"><h4>What it does NOT treat</h4><p>External hemorrhoids (outside the anal opening) cannot be banded. Surgical hemorrhoidectomy may be needed for large external or mixed hemorrhoids.</p></div><div class="info-card"><h4>Duration</h4><p>The banding itself takes only a few minutes and is typically performed in the office during a colonoscopy or flexible sigmoidoscopy visit.</p></div></div></div>
+    <div class="tab-pane" id="hemo-before">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text">If banding is performed at the time of a colonoscopy, follow your standard bowel prep instructions.</div></li>
+        <li><div class="step-num">2</div><div class="step-text">If performed as a standalone office procedure, a Fleet enema the morning of the visit is typically sufficient. Follow the specific instructions given at scheduling.</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Blood thinners:</strong> Please discuss blood thinner use with your physician prior to discontinuation.</div></li>
+        <li><div class="step-num">4</div><div class="step-text">Eat a light meal beforehand unless instructed otherwise. No sedation is typically required for in-office banding.</div></li>
+      </ol>
+    </div>
+    <div class="tab-pane" id="hemo-after">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text"><strong>Diet:</strong> Increase fiber intake (25–35g per day) and fluid intake. Soft, regular stools reduce straining and promote healing. A stool softener (docusate) may be recommended.</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>Activity:</strong> Avoid heavy lifting, straining, and strenuous exercise for 48–72 hours.</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Pain management:</strong> Mild discomfort and pressure for 1–3 days is normal. Tylenol is appropriate. Avoid NSAIDs for at least 7 days.</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Band passage:</strong> The band and hemorrhoid tissue fall off within 7–10 days. A small amount of blood or tissue in the toilet at that time is normal.</div></li>
+        <li><div class="step-num">5</div><div class="step-text"><strong>Sitz baths:</strong> Sitting in warm water for 10–15 minutes 2–3 times per day can relieve discomfort.</div></li>
+      </ol>
+      <div class="alert alert-danger"><strong>Call our office immediately or go to the ER if you experience:</strong> heavy rectal bleeding (soaking multiple pads), fever above 101°F, severe pain unrelieved by Tylenol, difficulty urinating, or signs of infection.</div>
+    </div>
+    <div class="tab-pane" id="hemo-expect">
+      <div class="card-grid">
+        <div class="info-card"><h4>During the procedure</h4><p>You will be positioned on your side. A small anoscope is inserted to visualize the hemorrhoid. The band placement takes seconds — you may feel pressure but typically not sharp pain.</p></div>
+        <div class="info-card"><h4>Immediately after</h4><p>A sensation of fullness, pressure, or mild aching is normal for 24–48 hours. Most patients return to normal activity the same day.</p></div>
+        <div class="info-card"><h4>Days 2–10</h4><p>The banded tissue gradually shrinks and falls off. Some spotting of blood is expected. Avoid constipation — straining increases bleeding risk.</p></div>
+        <div class="info-card"><h4>Follow-up</h4><p>A follow-up visit is scheduled 4–6 weeks later. If multiple hemorrhoids are present, additional banding sessions are performed at these visits.</p></div>
+      </div>
+    </div>
+    <div class="panel-disclaimer">Follow all specific instructions provided by your physician at the time of your procedure.</div>
+  </div>
+
+  <!-- CAPSULE ENDOSCOPY -->
+  <div class="content-panel" id="panel-capsule">
+    <div class="panel-header"><div class="panel-title">Capsule Endoscopy Prep Guide</div><button class="panel-close" onclick="closePanel('capsule')">Close ✕</button></div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'cap-about')">What is it?</button>
+      <button class="tab-btn" onclick="switchTab(this,'cap-prep')">How to prepare</button>
+      <button class="tab-btn" onclick="switchTab(this,'cap-day')">Day of the test</button>
+      <button class="tab-btn" onclick="switchTab(this,'cap-after')">After the test</button>
+    </div>
+    <div class="tab-pane active" id="cap-about"><p style="font-size:14px;line-height:1.8;margin-bottom:14px;">Capsule endoscopy (the "pill camera") allows your doctor to examine the entire small intestine — a region standard endoscopy and colonoscopy cannot reach. You swallow a vitamin-sized capsule containing a tiny camera that takes thousands of photos as it passes naturally through your digestive tract.</p><div class="card-grid"><div class="info-card"><h4>Why it's ordered</h4><p>Obscure GI bleeding, unexplained iron-deficiency anemia, Crohn's disease evaluation, small bowel tumors, celiac disease assessment.</p></div><div class="info-card"><h4>How long?</h4><p>You wear a recording device for approximately 8–10 hours. The capsule passes naturally in a bowel movement within 24–48 hours.</p></div><div class="info-card"><h4>Is it safe?</h4><p>Yes for most patients. If you have known bowel narrowing (stricture), swallowing difficulties, or a pacemaker, notify our office before the test.</p></div><div class="info-card"><h4>Do I need sedation?</h4><p>No — you simply swallow the capsule with water. Most patients go about their normal day during the recording period.</p></div></div></div>
+    <div class="tab-pane" id="cap-prep">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text"><strong>3–5 days before:</strong> Stop iron supplements — iron can coat the bowel lining and interfere with image quality.</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>Day before:</strong> Eat a low-fiber, low-residue diet. Avoid red or orange colored foods and drinks.</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Day before after 9:00 PM:</strong> Nothing to eat. Clear liquids only (water, white grape juice, plain broth).</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Bowel prep (if prescribed):</strong> Some physicians prescribe a prep to improve small bowel visibility. Follow your specific instructions if a prep was ordered.</div></li>
+        <li><div class="step-num">5</div><div class="step-text"><strong>Medications:</strong> Take essential morning medications with a small sip of water at least 1 hour before swallowing the capsule. Hold GLP-1 medications (Ozempic, Wegovy) — contact our office for guidance.</div></li>
+      </ol>
+      <div class="alert alert-warning">If you have a cardiac pacemaker, ICD, or neurostimulator, notify our office immediately — special precautions or device compatibility checks are required.</div>
+    </div>
+    <div class="tab-pane" id="cap-day">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text">Arrive at the designated location. The sensor belt or vest will be fitted to your abdomen.</div></li>
+        <li><div class="step-num">2</div><div class="step-text">Swallow the capsule with a small amount of water.</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>First 2 hours:</strong> Nothing to eat or drink. Remain upright (sitting or walking).</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>After 2 hours:</strong> You may drink clear liquids.</div></li>
+        <li><div class="step-num">5</div><div class="step-text"><strong>After 4 hours:</strong> You may eat a light snack (crackers, toast).</div></li>
+        <li><div class="step-num">6</div><div class="step-text">Avoid MRI scans and strong magnetic fields during the recording period. Avoid strenuous exercise and repeated bending.</div></li>
+        <li><div class="step-num">7</div><div class="step-text">Return the recording device at the end of the recording period as instructed.</div></li>
+      </ol>
+    </div>
+    <div class="tab-pane" id="cap-after">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text">Resume normal diet and activities once the recording device is returned.</div></li>
+        <li><div class="step-num">2</div><div class="step-text">The capsule passes naturally within 24–72 hours. You do not need to retrieve it.</div></li>
+        <li><div class="step-num">3</div><div class="step-text">Your physician will review the images (this takes several days) and contact you with results.</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>If you do not pass the capsule within 2 weeks,</strong> contact our office. Capsule retention is rare but can occur with strictures.</div></li>
+      </ol>
+      <div class="alert alert-danger"><strong>Call our office or go to the ER if you experience:</strong> difficulty swallowing after taking the capsule, significant abdominal pain or distension, nausea, or vomiting.</div>
+    </div>
+    <div class="panel-disclaimer">Always follow the specific instructions provided by our office at scheduling.</div>
+  </div>
+
+  <!-- FIBROSCAN -->
+  <div class="content-panel" id="panel-fibroscan">
+    <div class="panel-header"><div class="panel-title">FibroScan® — Liver Stiffness Testing</div><button class="panel-close" onclick="closePanel('fibroscan')">Close ✕</button></div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'fs-about')">What is it?</button>
+      <button class="tab-btn" onclick="switchTab(this,'fs-prep')">How to prepare</button>
+      <button class="tab-btn" onclick="switchTab(this,'fs-results')">Understanding results</button>
+    </div>
+    <div class="tab-pane active" id="fs-about"><p style="font-size:14px;line-height:1.8;margin-bottom:14px;">FibroScan® is a non-invasive, painless ultrasound-based test that measures liver stiffness (fibrosis) and fat content (steatosis). It is used as an alternative to liver biopsy to assess liver damage in NAFLD/MASLD, hepatitis B and C, alcoholic liver disease, and other chronic liver conditions.</p><div class="card-grid"><div class="info-card"><h4>Why it's ordered</h4><p>To assess liver fibrosis stage, monitor disease progression, evaluate fatty liver disease (NAFLD/MASLD), or follow up after hepatitis treatment.</p></div><div class="info-card"><h4>How it works</h4><p>A probe placed on the skin over the liver sends a mild vibration and ultrasound wave. The speed of the wave indicates liver stiffness. Takes 5–10 minutes.</p></div><div class="info-card"><h4>Is it painful?</h4><p>No — completely painless. You will feel only a mild vibration on the right side of your abdomen. No needles, no sedation, no radiation.</p></div><div class="info-card"><h4>Limitations</h4><p>Results may be less reliable with very high BMI, active hepatitis inflammation, or significant ascites. Your physician will factor this into interpretation.</p></div></div></div>
+    <div class="tab-pane" id="fs-prep">
+      <ol class="step-list">
+        <li><div class="step-num">1</div><div class="step-text"><strong>Fast for at least 2–3 hours</strong> before the test. Eating causes temporary changes in liver blood flow that can affect results. Water is fine.</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>Avoid alcohol</strong> for at least 24 hours before your appointment.</div></li>
+        <li><div class="step-num">3</div><div class="step-text">Wear comfortable, loose-fitting clothing that allows easy access to the right side of your abdomen.</div></li>
+        <li><div class="step-num">4</div><div class="step-text">Continue all regular medications unless instructed otherwise.</div></li>
+      </ol>
+      <div class="alert alert-info">FibroScan requires no bowel prep, sedation, or IV access. You can drive yourself and return to normal activity immediately after.</div>
+    </div>
+    <div class="tab-pane" id="fs-results">
+      <p style="font-size:14px;margin-bottom:14px;">FibroScan measures two values — liver stiffness (kPa, reflecting fibrosis) and CAP score (dB/m, reflecting fat content). Results are interpreted by your physician alongside your labs and clinical history.</p>
+      <div class="card-grid">
+        <div class="info-card"><h4>Liver stiffness (kPa)</h4><p>Lower values (under 7 kPa) generally suggest minimal fibrosis. Higher values suggest advancing fibrosis or cirrhosis. Your physician will discuss your specific result in context.</p></div>
+        <div class="info-card"><h4>CAP score — fat content</h4><p>Measures hepatic steatosis (liver fat). Higher scores indicate greater fat accumulation. Used to grade and monitor fatty liver disease.</p></div>
+        <div class="info-card"><h4>What happens next?</h4><p>Depending on results, your physician may recommend lifestyle changes, medication, additional imaging (MRI), or in rare cases, liver biopsy for definitive staging.</p></div>
+        <div class="info-card"><h4>Can it replace biopsy?</h4><p>In many cases, yes. FibroScan reduces the need for invasive biopsy. However, biopsy may still be needed when results are inconclusive.</p></div>
+      </div>
+    </div>
+    <div class="panel-disclaimer">FibroScan results are interpreted by your physician together with your labs, symptoms, and medical history. Do not interpret results in isolation.</div>
+  </div>
+
+  <!-- EGD -->
+  <div class="content-panel" id="panel-egd">
+    <div class="panel-header"><div class="panel-title">Upper Endoscopy (EGD) Prep Guide</div><button class="panel-close" onclick="closePanel('egd')">Close ✕</button></div>
+    <ol class="step-list">
+      <li><div class="step-num">1</div><div class="step-text"><strong>Nothing to eat or drink</strong> for at least 6–8 hours before the procedure. The stomach must be empty for safe scoping.</div></li>
+      <li><div class="step-num">2</div><div class="step-text"><strong>Medications:</strong> Take essential medications (blood pressure, heart, seizure) with a small sip of water up to 4 hours before. Hold diabetes medications the morning of the procedure.</div></li>
+      <li><div class="step-num">3</div><div class="step-text"><strong>Blood thinners:</strong> Hold as instructed. Do not stop warfarin without specific physician guidance.</div></li>
+      <li><div class="step-num">4</div><div class="step-text"><strong>Sedation:</strong> You will receive IV sedation. Arrange for a responsible adult to drive you home — you cannot drive for the rest of the day.</div></li>
+      <li><div class="step-num">5</div><div class="step-text">The procedure takes approximately 10–20 minutes. You will receive a summary of findings before leaving.</div></li>
+    </ol>
+    <div class="alert alert-danger"><strong>Go to the ER if after your EGD you experience:</strong> severe chest or throat pain, worsening difficulty swallowing, fever, or vomiting blood.</div>
+    <div class="panel-disclaimer">Follow the specific instructions provided at scheduling. Contact our office if you have questions before your procedure.</div>
+  </div>
+
+  <!-- EUS -->
+  <div class="content-panel" id="panel-eus">
+    <div class="panel-header"><div class="panel-title">Endoscopic Ultrasound (EUS)</div><button class="panel-close" onclick="closePanel('eus')">Close ✕</button></div>
+    <p style="font-size:14px;line-height:1.8;margin-bottom:16px;">Endoscopic ultrasound combines an endoscope with a high-frequency ultrasound probe to produce detailed images of the GI tract walls and nearby organs (pancreas, liver, bile ducts, lymph nodes). It can also obtain tissue samples (FNA/FNB) from deep structures.</p>
+    <div class="card-grid">
+      <div class="info-card"><h4>Why it's ordered</h4><p>Pancreatic cysts or masses, pancreatitis, bile duct stones, submucosal GI tumors, staging of GI cancers, unexplained abdominal pain.</p></div>
+      <div class="info-card"><h4>Prep (upper EUS)</h4><p>Same as upper endoscopy — nothing to eat or drink for 6–8 hours. IV sedation is used. Arrange a driver.</p></div>
+      <div class="info-card"><h4>Prep (lower EUS)</h4><p>If examining the rectum or lower GI tract, a bowel prep or enema may be required. Follow specific instructions provided.</p></div>
+      <div class="info-card"><h4>If a biopsy is taken</h4><p>Results return in 5–7 business days. Blood thinners may need to be held for 5–7 days after FNA/FNB.</p></div>
+    </div>
+    <div class="panel-disclaimer">EUS is a specialized procedure. Follow all instructions provided at scheduling.</div>
+  </div>
+
+  <!-- ERCP -->
+  <div class="content-panel" id="panel-ercp">
+    <div class="panel-header"><div class="panel-title">ERCP — Bile Duct &amp; Pancreas Procedure</div><button class="panel-close" onclick="closePanel('ercp')">Close ✕</button></div>
+    <p style="font-size:14px;line-height:1.8;margin-bottom:16px;">ERCP (Endoscopic Retrograde Cholangiopancreatography) combines endoscopy and X-ray imaging to diagnose and treat problems in the bile ducts and pancreatic duct. It is used to remove bile duct stones, treat blockages, place stents, or evaluate unexplained jaundice.</p>
+    <div class="card-grid">
+      <div class="info-card"><h4>Why it's ordered</h4><p>Bile duct stones, strictures, pancreatic duct problems, jaundice, recurrent pancreatitis, or biliary leaks after surgery.</p></div>
+      <div class="info-card"><h4>Prep</h4><p>Nothing to eat or drink for 6–8 hours. IV sedation or general anesthesia is used. You will need a driver — do not drive for 24 hours.</p></div>
+      <div class="info-card"><h4>Blood thinners</h4><p>Please discuss blood thinner use with your physician prior to discontinuation.</p></div>
+      <div class="info-card"><h4>After the procedure</h4><p>Mild sore throat and bloating are common. Eat light foods several hours after. Watch for fever, severe abdominal pain, or jaundice — these require immediate attention.</p></div>
+    </div>
+    <div class="alert alert-warning"><strong>Post-ERCP pancreatitis</strong> occurs in approximately 3–5% of cases. Symptoms include worsening abdominal pain radiating to the back, nausea, and vomiting within 24 hours. Go to the ER if these occur.</div>
+    <div class="panel-disclaimer">ERCP is a specialized procedure. All prep instructions will be provided at scheduling.</div>
+  </div>
+
+</main>
+
+<footer id="footer">
+  <strong>Gastro Group &amp; Endocenter — Patient Resource Center</strong><br>
+  Powered by GI Alliance<br>
+  This website provides general patient education and does not constitute medical advice, diagnosis, or treatment.<br>
+  No personal health information is collected through this site. For clinical questions, contact our office directly.<br><br>
+  <span style="opacity:0.35;">© 2025 Gastro Group &amp; Endocenter &nbsp;·&nbsp; Content reviewed by our physician team</span>
+</footer>
+
+<script>
+let activePanel=null;
+function openPanel(id){
+  if(activePanel){document.getElementById('panel-'+activePanel)?.classList.remove('active');document.getElementById('card-'+activePanel)?.classList.remove('active');}
+  if(activePanel===id){activePanel=null;return;}
+  activePanel=id;
+  const panel=document.getElementById('panel-'+id);
+  const card=document.getElementById('card-'+id);
+  if(panel){panel.classList.add('active');card?.classList.add('active');}
+  setTimeout(()=>panel?.scrollIntoView({behavior:'smooth',block:'start'}),50);
+}
+function closePanel(id){
+  document.getElementById('panel-'+id)?.classList.remove('active');
+  document.getElementById('card-'+id)?.classList.remove('active');
+  if(activePanel===id)activePanel=null;
+}
+function switchTab(btn,paneId){
+  const panel=btn.closest('.content-panel');
+  panel.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  panel.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(paneId)?.classList.add('active');
+}
+function toggleFaq(el){el.classList.toggle('open');}
+function handleSearch(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  if(!q)return;
+  const map=[
+    {terms:['prep','colonoscopy','bowel','suflave','miralax','sutab','laxative','clear liquid','diet before'],panel:'prep'},
+    {terms:['breath','sibo','foodmarble','lactose','fructose','methane','hydrogen','bacterial overgrowth','imo'],panel:'breath'},
+    {terms:['pathology','biopsy','polyp','adenoma','dysplasia','hyperplastic','sessile','tubular','villous','hp','h pylori result'],panel:'pathology'},
+    {terms:['after','recovery','post','colonoscopy recovery','procedure done','following'],panel:'nextsteps'},
+    {terms:['billing','bill','insurance','cost','payment','polyp rule','anesthesia','charge','no surprises','pay'],panel:'billing'},
+    {terms:['ibs','irritable bowel','constipation','gastroparesis','fecal incontinence','pelvic floor','achalasia','spasm','stricture','gerd','reflux','barrett','eoe','eosinophilic','ibd','crohn','colitis','celiac','gluten','sibo','bile acid','epi','pancreatic insufficiency','sphincter of oddi','cirrhosis','h pylori','helicobacter'],panel:'conditions'},
+    {terms:['cancer','colorectal','colon cancer','pancreatic cancer','esophageal cancer','gastric cancer','stomach cancer','biliary','cholangiocarcinoma','hepatocellular','hcc','liver cancer','screening','tumor','malignant'],panel:'cancer'},
+    {terms:['diet','fodmap','low fiber','gluten free','low residue','nutrition','food','eat'],panel:'diet'},
+    {terms:['medication','medicine','drug','ppi','omeprazole','rifaximin','xifaxan','mesalamine','budesonide','biologic','linzess','linaclotide'],panel:'medications'},
+    {terms:['hemorrhoid','banding','rubber band','ligation','rectal bleeding'],panel:'hemorrhoid'},
+    {terms:['capsule','pill camera','wireless','small bowel','pill cam'],panel:'capsule'},
+    {terms:['fibroscan','liver stiffness','fibrosis','fatty liver','cap score','kpa','masld','nafld'],panel:'fibroscan'},
+    {terms:['egd','upper endoscopy','upper scope','esophagus','stomach scope','swallow scope'],panel:'egd'},
+    {terms:['eus','endoscopic ultrasound','pancreas ultrasound','fna','fnb'],panel:'eus'},
+    {terms:['ercp','bile duct','pancreatic duct','stent','jaundice','stone','choledocholithiasis'],panel:'ercp'},
+  ];
+  let matched=null;
+  for(const entry of map){
+    if(entry.terms.some(t=>q.includes(t))){matched=entry.panel;break;}
+  }
+  // close any open panel first
+  if(activePanel){
+    document.getElementById('panel-'+activePanel)?.classList.remove('active');
+    document.getElementById('card-'+activePanel)?.classList.remove('active');
+    activePanel=null;
+  }
+  if(matched){
+    openPanel(matched);
+    document.getElementById('search-result').textContent='Showing results for: "'+document.getElementById('searchInput').value.trim()+'"';
+  } else {
+    document.getElementById('search-result').textContent='No exact match found for "'+document.getElementById('searchInput').value.trim()+'" — try browsing the topics below or call our office.';
+  }
+  document.getElementById('search-result').style.display='block';
+  setTimeout(()=>{document.getElementById('search-result').style.display='none';},6000);
+}
+document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')handleSearch();});
+</script>
+</body>
+</html>
